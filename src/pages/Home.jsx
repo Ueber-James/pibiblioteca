@@ -46,17 +46,18 @@ function App() {
                     <p className=" flex justify-center items-center text-black font-bold"> Devolução</p>
                 </div>
 
-                <div className="absolute bottom-1/4 left-0 transform translate-y-1/2">
+                <Link to="/biblioteca"><div className="absolute bottom-1/4 left-0 transform translate-y-1/2">
                     <img src={bibliotecaIcon} alt="Biblioteca" className="w-16 h-16" />
                     <p className=" flex justify-center items-center text-black font-bold"> Biblioteca</p>
                 </div>
-
-                <div className="absolute top-1/4 left-0 transform -translate-y-1/2">
+</Link>
+                 <Link to="/incluir"><div className="absolute top-1/4 left-0 transform -translate-y-1/2">
                     <img src={incluirLivroIcon} alt="Incluir Livro" className="w-16 h-16" />
                     <p className=" flex justify-center items-center text-black font-bold"> Incluir</p>
 
 
                 </div>
+                </Link>
             </div>
             {token && <LogoutButton />}
         </div>

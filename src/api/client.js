@@ -1,21 +1,29 @@
 // src/api/client.js
-const BASE = import.meta.env.VITE_API_URL;
+const BASE = import.meta.env.VITE_API_URL;  
+// ex: "https://apibiblioteca-ni8u.onrender.com/api"
 
-/** wrapper genérico */
 async function request(path, options = {}) {
-  const res = await fetch(`${BASE}${path}`, {
-    headers: { 'Content-Type': 'application/json', ...options.headers },
+  const url = `${BASE}${path}`;
+  const token = localStorage.getItem('token'); // ← Adicione esta linha
+  
+  const headers = {
+    'Content-Type': 'application/json',
+    ...(token && { 'Authorization': `Bearer ${token}` }), // ← Adicione
+    ...options.headers
+  };
+
+  const res = await fetch(url, {
+    headers,
     ...options
   });
   if (!res.ok) {
-    // tenta extrair erro JSON, senão usa statusText
     const err = await res.json().catch(() => ({}));
     throw new Error(err.error || res.statusText);
   }
+  if (options.method === 'DELETE' || res.status === 204) return;
   return res.json();
 }
 
-/** registro de usuário (se ainda usar) */
 export function register(nome, username, password) {
   return request('/users/register', {
     method: 'POST',
@@ -23,7 +31,6 @@ export function register(nome, username, password) {
   });
 }
 
-/** login de usuário (se ainda usar) */
 export function login(username, password) {
   return request('/users/login', {
     method: 'POST',
@@ -34,17 +41,40 @@ export function login(username, password) {
   });
 }
 
-/** cria agendamento sem token nem vínculo */
-export function createAgendamento({ nome, telefone, servico, data, horario }) {
-  return request('/agendamentos', {
+/** cria aluno */
+export function criarAluno({ matricula, nome }) {
+  return request('/alunos', {
     method: 'POST',
-    body: JSON.stringify({ nome, telefone, servico, data, horario })
+    body: JSON.stringify({ matricula, nome })
   });
 }
 
-/** lista todos os agendamentos */
-export function listAgendamentos() {
-  return request('/agendamentos', {
-    method: 'GET'
+/** lista todos os alunos */
+export function listAlunos() {
+  return request('/alunos', { method: 'GET' });
+}
+export function createLivro({ titulo, categoria, quantidade }) {
+  return request('/livros', {
+    method: 'POST',
+    body: JSON.stringify({ titulo, categoria, quantidade })
   });
+}
+
+export function listLivros() {
+  return request('/livros', { method: 'GET' });
+}
+
+export function createEmprestimo({ matricula, livro_id, data_retirada }) {
+  return request('/emprestimos', {
+    method: 'POST',
+    body: JSON.stringify({ matricula, livro_id, data_retirada })
+  });
+}
+
+export function listEmprestimos() {
+  return request('/emprestimos', { method: 'GET' });
+}
+
+export function deleteEmprestimo(id) {
+  return request(`/emprestimos/${id}`, { method: 'DELETE' });
 }
