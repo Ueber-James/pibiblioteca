@@ -6,6 +6,7 @@ import emprestarIcon from '../assets/emprestar.svg';
 import devolucaoIcon from '../assets/devolucao.svg';
 import bibliotecaIcon from '../assets/biblioteca.svg';
 import incluirLivroIcon from '../assets/incluir.svg';
+
 import LogoutButton from '../components/LogoutButton';
 
 import mesaIcon from '../assets/mesa.svg';
@@ -41,11 +42,11 @@ function App() {
                     <p className=" flex justify-center items-center text-black font-bold"> Emprestar</p>
                 </Link>
 
-                <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2">
+                <Link to="/devolucao"><div className="absolute bottom-0 left-1/2 transform -translate-x-1/2">
                     <img src={devolucaoIcon} alt="Devolução" className="w-16 h-16" />
                     <p className=" flex justify-center items-center text-black font-bold"> Devolução</p>
                 </div>
-
+</Link>
                 <Link to="/biblioteca"><div className="absolute bottom-1/4 left-0 transform translate-y-1/2">
                     <img src={bibliotecaIcon} alt="Biblioteca" className="w-16 h-16" />
                     <p className=" flex justify-center items-center text-black font-bold"> Biblioteca</p>

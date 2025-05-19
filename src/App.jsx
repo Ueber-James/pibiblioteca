@@ -5,6 +5,7 @@ import Emprestar from './pages/Emprestar'
 import Login from './pages/Login'
 import CadastroColaborador from './pages/cadastroColaborador'
 import IncluirLivro from './pages/IncluirLivro'
+import Devolucao from './pages/DevolucaoLivro'
 import Biblioteca from './pages/Biblioteca'
 
 import PrivateRoute from './components/PrivateRoute'
@@ -24,6 +25,7 @@ function App() {
         <Route path="/emprestar" element={<PrivateRoute><Emprestar /></PrivateRoute>}></Route>
         <Route path="/incluir" element={<PrivateRoute><IncluirLivro /></PrivateRoute>}></Route>
         <Route path="/biblioteca" element={<PrivateRoute><Biblioteca /></PrivateRoute>}></Route>
+                <Route path="/devolucao" element={<PrivateRoute><Devolucao /></PrivateRoute>}></Route>
 
         <Route path="/" element={<Login />}></Route>
         <Route path="/cadastrocolaborador" element={<PrivateRoute><CadastroColaborador /></PrivateRoute>}></Route>
