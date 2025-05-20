@@ -10,14 +10,22 @@ export default function Biblioteca() {
 
   useEffect(() => {
     listLivros()
-      .then(data => setLivros(data.map(l => l.titulo)))
+      .then(data => {
+        // extrai apenas títulos válidos
+        const titulos = data
+          .map(item => item.titulo)
+          .filter(t => typeof t === 'string' && t.length > 0);
+        setLivros(titulos);
+      })
       .catch(err => setError(err.message));
   }, []);
 
   // agrupa por letra inicial, filtrando por busca
   const grupos = livros.reduce((acc, titulo) => {
-    if (!titulo.toLowerCase().includes(search.toLowerCase())) return acc;
-    const letra = titulo[0].toUpperCase();
+    if (typeof titulo !== 'string') return acc;
+    const texto = titulo.toLowerCase();
+    if (!texto.includes(search.toLowerCase())) return acc;
+    const letra = (titulo[0] ?? '').toUpperCase();
     if (!acc[letra]) acc[letra] = [];
     acc[letra].push(titulo);
     return acc;
